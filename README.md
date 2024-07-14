@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/51a60022-365c-4eac-b725-ec40e6c34b51)# C-C-Advanced-Study
+# C-C-Advanced-Study
 - [1a. COMPILER](#1a-COMPILER)
 - [1b. MACRO](#1b-MACRO)
 - [2a. STDARG](#2a-STDARG)
