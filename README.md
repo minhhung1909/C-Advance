@@ -4,13 +4,16 @@
 - [2a. STDARG](#2a-STDARG)
 - [2b. ASSERT](#2b-ASSERT)
 - [3. POINTER](#3-POINTER)
-- [4. EXTERN - STATIC - VOLATILE - REGISTER](#4-EXTERN---STATIC---VOLATILE---REGISTER)
-- [5a. GOTO](#5a-GOTO)
-- [5b. SETJMP](#5b-SETJMP)
-- [6. BIT MAINPULATION](#6-BIT-MAINPULATION)
-- [7. STRUCT - UNION](#7-STRUCT---UNION)
-
-- [MEMORY LAYOUT](#MEMORY-LAYOUT)
+- [4. MEMORY LAYOUT](#4-MEMORY-LAYOUT)
+- [5. EXTERN - STATIC - VOLATILE - REGISTER](#5-EXTERN---STATIC---VOLATILE---REGISTER)
+- [6a. GOTO](#5a-GOTO)
+- [6b. SETJMP](#5b-SETJMP)
+- [7. BIT MAINPULATION](#7-BIT-MAINPULATION)
+- [8. STRUCT - UNION](#8-STRUCT---UNION)
+- [9. JSON](#9-JSON)
+- [10. LINKED LIST](#10-LINKED-LIST)
+- [11. STACK - QUEUE](#11-STACK---QUEUE)
+- [12. BINARY SEARCH - FILE OPERATIONS - CODE STANDARDS](#12-BINARY-SEARCH---FILE-OPERATIONS---CODE-STANDARDS)
   
 # 1a. COMPILER
 
@@ -415,7 +418,45 @@ int main() {
 
 - Để tránh *Dereferencing* 
 
-# 4. EXTERN - STATIC - VOLATILE - REGISTER
+# 4. MEMORY LAYOUT
+
+Chương trình main.c (trên windown) hoặc main.hex (trên vđk) được lưu vào bộ nhớ SSD hoặc Flash. Đối với Windown khi ấn run còn trên VĐK thì bật lên thì lập tức chương trình sẽ được copy vào bộ nhớ RAM để thực thi.
+
+## Text segment
+
+- Quyền: Read-Only, Run
+- Chứa chỉ lệnh ngôn ngữ máy.
+
+## Data Segment (Initial data segment)
+
+- Quyền: Read-Write
+- Chứa: Biến toàn cục, Static được khởi tạo giá trị khác 0.
+- Các biến sẽ được thu hồi khi chương trình kết thúc.
+
+## BSS Segment (Uninitialized Data Segment)
+
+- Quyền: Read-Write
+- Chứa: Biến toàn cục, static được khởi tạo giá trị bằng không hoặc không gán giá trị (Không tường minh).
+- Các biến sẽ được thu hồi khi chương trình kết thúc.
+
+## Stack
+
+- Quyền: Read-Write
+- Chứa: Biến cục bộ và tham số truyền vào. 
+- Vùng nhớ này sẽ được thu hồi khi ra khỏi hàm. Bộ nhớ này có tốc độ truy cập nhanh nhất
+- Hệ điều hành sẽ quản lý bộ nhớ này.
+
+## Heap
+
+- Quyền: Read-Write
+- Chứa: Là vùng nhwos dùng để thực hiện cấp phát động. 
+- Vùng nhớ này sẽ không được huỷ khi sử dụng xong nên phải được thu hồi khi thực hiện hàm free().
+
+
+Stack và Heap là 2 vùng nhớ cố định và có giới hạn nếu không cân nhắc khi sữ dụng dễ xãy ra tình trạng Overflow
+
+
+# 5. EXTERN - STATIC - VOLATILE - REGISTER
 
 ## Extern
 Extern là dùng để khai báo một biến đã khai báo ở 1 file nào đó và được sử dụng trong 1 file mà biến Extern này được khai báo giúp dữ liệu tại biến này luôn được cập nhật tài 2 file.
@@ -432,9 +473,10 @@ extern int num;
 
 ## Static
 ### Local Static
-Static local là những biến hoạt động trong 1 hàm nhất định và không bị thu hồi địa chỉ khi hàm kết thúc. Nằm trong vùng nhớ BSS(uninitialized data segment)
+Static local là những biến hoạt động trong 1 hàm nhất định và không bị thu hồi địa chỉ khi hàm kết thúc. Nằm trong vùng nhớ BSS(uninitialized data segment).
+
 ### Global Static
-Global static cũng tương tự local static nhưng chỉ khác là biến này hoạt động trong toàn bộ file.
+Global static cũng tương tự local static nhưng chỉ khác là biến này hoạt động trong toàn bộ file. Gobal Static còn giúp tránh trường hợp trùng tên giửa các file với nhau.
 
 ## Volatile
 Volotile trong c cho phép ngăn chặn việc tối ưu hoá biến làm cho giá trị biến đó không thay đổi khi có tác động bên ngoài. 
@@ -447,7 +489,7 @@ Khai báo register bằng cách đặt tên trước kiểu dữ liệu *ví d�
 
 register int a = 10;
 
-# 5a. GOTO
+# 6a. GOTO
 
 Goto là một trong những câu lệnh giúp kiểm soát flow hoạt động của chương trình. Nhưng các này thường ít được khuyên dùng do vấn đề bảo trình và đọc gặp khó khăn. Đối với goto chỉ hoạt động được trong cục bộ.
 
@@ -478,7 +520,7 @@ int main() {
 </p>
 </details>
 
-# 5b. SETJMP
+# 6b. SETJMP
 
 - setjmp.h: Đây là một thư viện dùng để xử lý ngoại lệ(gần tương tự như goto) Nhưng thư viện này mạnh hơn Goto ở chỗ có thể hoạt động toàn cục. Thư viện này cung cấp 2 hàm là:
 
@@ -524,7 +566,7 @@ int main(){
 </p>
 </details>
 
-# 6. BIT MASK
+# 7. BIT MASK
 
 - Bit mask là kỹ thuật sử lý bit dùng để lưu trữ hoặc thao tác nó với các cờ hoặc trạng thái.
 
@@ -617,6 +659,7 @@ typedef union Student {
 }Student;
 ```
 
+
 # 9. JSON
 JSON là viết tắt của "Java Scrip Object Notation - Ghi chú về đối tượng Javascrip". JSON là một định dạng dùng để truyền dữ liệu. Json có cú pháp dựa trên 1 cặp key-value
 
@@ -651,7 +694,7 @@ typedef enum{
 **Value có thể là bất cứ giá trị nào trong 6 kiểu dữ liệu trên nhưng mặc định Key phải là String**
 
 
-# 10. Linked List
+# 10. LINKED LIST
 
 Linked list là một cấu trúc dữ liệu dùng để lưu trữ dữ liệu. Một Linked list gồm nhiều node. Trong mỗi node thì gồm 2 phần tử
 
@@ -659,49 +702,256 @@ Linked list là một cấu trúc dữ liệu dùng để lưu trữ dữ liệu
 
 - Pointer đến node sau đó. Pointer này có thể là Null nếu nó là phần tử duy nhất hoặc là phần tử cuối cùng trong mảng.
 
-# 10. Stack Queue
-
+# 11. STACK - QUEUE
 
 
 ## Stack
+Stack là cấu trúc dữ liệu theo nguyên tắc là Last In Fist Out (LIFO). 
 
+Stack gồm 3 cơ chế:
+- Push: Đặt vào 1 phần tử lên đầu tiên.
+- Pop: Xoá phần tử đầu tiên ra.
+- Top: Lấy ra phần tử đầu tiên ra.
 
 ## Queue
+Queue là cấu trúc dữ liệu theo nguyên tắc Fist In Fist Out. 
+
+Stack gồm 3 cơ chế:
+- Inqueue: Đưa 1 phần tử vào hàng chờ.
+- Dequeue: Lấy phần tử đầu tiên trong hàng đợi.
+- front: Lấy giá trị của phần tử đầu tiên.
 
 
-# Memory Layout
+# 12.BINARY SEARCH - FILE OPERATIONS - CODE STANDARDS
 
-Chương trình main.c (trên windown) hoặc main.hex (trên vđk) được lưu vào bộ nhớ SSD hoặc Flash. Đối với Windown khi ấn run còn trên VĐK thì bật lên thì lập tức chương trình sẽ được copy vào bộ nhớ RAM để thực thi.
+## Binary Search
 
-## Text segment
+Binary Search là thuật toán tìm kiếm đượng ứng dụng cho các dãy số được sắp theo theo trật tự nhất định từ lớn đến bé hoặc ngược lại.  
+- B1: Lấy giá trị ở giử để so sánh với giá tìm. Từ đó có được khoảng giá trị cần tìm là lớn hơn hoặc bé hơn giá trị ở giửa
+- B2: Tiếp tục thực hiện việc chia tôi mảng để lấy phần tử ở giửa nếu chưa bằng thì vẫn tiếp tục chia đôi tới khi nào tìm ra giá trị thì thôi.
+ 
+```Pseudocode
 
-- Quyền: Read-Only, Run
-- Chứa chỉ lệnh ngôn ngữ máy.
+khai báo x; // x là số cần tìm
+//  chia mảng ra làm 2 với phần tử ở giửa mảng được gắn là x
+//  Phần tử đầu mảng là left, phần tử cuối mảng là right.
+if arr[mid] == x
+  return mid
+else if arr[mid] > x
+  return right = mid - 1  //bỏ các phần tử bên phải
+else if arr[mid] < x
+  return left = mid + 1   // bỏ các phần tử bên trái
 
-## Data Segment (Initial data segment)
+```
 
-- Quyền: Read-Write
-- Chứa: Biến toàn cục, Static được khởi tạo giá trị khác 0.
-- Các biến sẽ được thu hồi khi chương trình kết thúc.
+## File Operations
+Các hàm cần thiết trong xử lý file
 
-## BSS Segment (Uninitialized Data Segment)
-
-- Quyền: Read-Write
-- Chứa: Biến toàn cục, static được khởi tạo giá trị bằng không hoặc không gán giá trị (Không tường minh).
-- Các biến sẽ được thu hồi khi chương trình kết thúc.
-
-## Stack
-
-- Quyền: Read-Write
-- Chứa: Biến cục bộ và tham số truyền vào. 
-- Vùng nhớ này sẽ được thu hồi khi ra khỏi hàm. Bộ nhớ này có tốc độ truy cập nhanh nhất
-- Hệ điều hành sẽ quản lý bộ nhớ này.
-
-## Heap
-
-- Quyền: Read-Write
-- Chứa: Là vùng nhwos dùng để thực hiện cấp phát động. 
-- Vùng nhớ này sẽ không được huỷ khi sử dụng xong nên phải được thu hồi khi thực hiện hàm free().
+- fopen(): Return 1 con trỏ file
+Mode open:
+  + r:   Mở file ở chế độ đọc.                       Mở thành công => return địa chỉ phần tử đầu tiên.    Mở không thành công => Return NULL.
+  + rb:  Mở file ở chế độ đọc Binary.                Mở thành công => return địa chỉ phần tử đầu tiên.    Mở không thành công => Return NULL.
+  + w:   Mở file ở chế độ ghi.                       File tồn tại => Ghi đè dữ liệu mới.    File không tồn tại thì tạo file mới.    Mở không thành công => Return NULL.
+  + wb:  Mở file ở chế độ ghi.                       File tồn tại => Ghi đè dữ liệu mới.    File không tồn tại thì tạo file mới.    Mở không thành công => Return NULL.
+  + a:   Mở file ở chế độ nối ghi vào phàn tử tiếp theo trong file.    File không tồn tại thì tạo file mới.    Mở không thành công => Return NULL.
+  + ab:  Mở file ở chế độ nối ghi vào phần tử tiếp theo trong file ở dạng Binary.    File không tồn tại thì tạo file mới.    Mở không thành công => Return NULL.
+  + r+:  Mở file ở chế độ Read-Write.                Mở thành công => return địa chỉ phần tử đầu tiên.    Mở không thành công => Return NULL.
+  + rb+: Mở file ở chế độ Read-Write Binary.         Mở thành công => return địa chỉ phần tử đầu tiên.    Mở không thành công => Return NULL.
+  + w+:  Mở file ở chế độ Read-Write.                File tồn tại => Trả về địa chỉ phần tử đầu tiên.    File không tồn tại thì tạo file mới.
+  + wb+: Mở file ở chế độ Read-Write Binary.         File tồn tại => Trả về địa chỉ phần tử đầu tiên.    File không tồn tại thì tạo file mới.
+  + a+:  Mở file ở chế độ nối và read.               File tồn tại thì trả về địa chỉ cuối cùng.          File không tồn tại thì tạo file mới.
+  + ab+:  Mở file ở chế độ nối và read file Binary.  File tồn tại thì trả về địa chỉ cuối cùng.          File không tồn tại thì tạo file mới.
+- fscanf(): Định dạng lại chuỗi.
 
 
-Stack và Heap là 2 vùng nhớ cố định và có giới hạn nếu không cân nhắc khi sữ dụng dễ xãy ra tình trạng Overflow
+<details><summary>Code Demo fscanf()</summary>
+<p>
+    
+```C
+
+#include <stdio.h>
+#include <stdlib.h>
+int main()
+{
+   char str1[10], str2[10], str3[10];
+   int year;
+   FILE * fp;
+
+   fp = fopen ("baitapc.txt", "w+");
+   fputs("Toi sinh nam 2016", fp);
+   
+   rewind(fp);
+   fscanf(fp, "%s %s %s %d", str1, str2, str3, &year);
+   
+   printf("Doc chuoi 1: |%s|\n", str1 );
+   printf("Doc chuoi 2: |%s|\n", str2 );
+   printf("Doc chuoi 3: |%s|\n", str3 );
+   printf("Doc so nguyen: |%d|\n", year );
+
+   fclose(fp);
+   
+   return(0);
+}
+
+```
+</p>
+</details>
+
+- fgets(): Copy nội dung trong file vào mảng.
+
+<details><summary>Viết chương trình mở file myfile.txt để đọc 100 ký tự dòng đầu tiên và xuất ra màn hình</summary>
+<p>
+    
+```C
+#include <stdio.h>
+int main()
+{
+  FILE * pFile;
+  char mystring [100];
+  pFile = fopen ("myfile.txt" , "r");
+  if (pFile == NULL) perror ("Error opening file");
+  else
+  {
+    if ( fgets (mystring , 100 , pFile) != NULL )
+      puts (mystring);
+    fclose (pFile);
+  }
+  return 0;
+}
+```
+
+</p>
+</details>
+
+- fgetc(): Láy giá trị hiện tại của file. Return kiểu char
+
+
+<details><summary>Code Demo Goto</summary>
+<p>
+    
+```C
+
+#include <stdio.h>
+int main ()
+{
+  FILE * pFile;
+  int c;
+  int n = 0;
+  pFile=fopen ("myfile.txt","r");
+  if (pFile==NULL) perror("Error opening file");
+  else
+  {
+    do
+    {
+      c = fgetc(pFile);
+      if (c == '$') n++;
+    } while (c != EOF);
+    fclose(pFile);
+    printf("The file contains %d dollar sign characters ($).\n",n);
+  }
+  return 0;
+}
+
+```
+</p>
+</details>
+
+- fread(): Đọc một số lượng Byte được chỉ định là File .bin
+
+<details><summary>Code Demo fread()</summary>
+<p>
+    
+```C
+
+fread(void *ptr,size_t size,size_t count,FILE *stream);
+  ptr: buffer chứa data đọc được
+  size: kích thước mỗi phần tử
+  count: số phần tử cần đọc
+  stream: con trỏ file
+
+```
+
+</p>
+</details>
+
+- fprintf(): Ghi 1 chuỗi vào file. Có thể thêm danh sách các đối số
+- fputs(): Ghi chuỗi vào file
+
+<details><summary> Code Demo fputs() </summary>
+<p>
+    
+```C
+
+#include <stdio.h>
+int main ()
+{
+  FILE * pFile;
+  char sentence [256];
+  printf("Enter sentence to append: ");
+  fgets(sentence,256,stdin);
+  pFile = fopen("mylog.txt","a");
+  fputs(sentence,pFile);
+  fclose(pFile);
+  return 0;
+}
+
+```
+</p>
+</details>
+  
+- fputc(): Ghi 1 kí tự vào file
+
+<details><summary>Code Demo fputc() </summary>
+<p>
+    
+```C
+
+#include <stdio.h>
+int main ()
+{
+  FILE * pFile;
+  char c;
+  pFile = fopen("alphabet.txt","w");
+  if (pFile!=NULL)
+  {
+    for (c = 'A' ; c <= 'Z' ; c++)
+    fputc ( c , pFile );
+    fclose (pFile);
+  }
+  return 0;
+}
+
+```
+</p>
+</details>
+
+- fwrite(): Ghi 1 byte được chỉ định vào FIle .bin
+
+<details><summary>Code Demo fwrite() </summary>
+<p>
+    
+```C
+
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+  FILE *fp;
+  char c[] = "Example for function fread and fwrite";
+  char buffer[100];
+  fp = fopen("file.txt", "rw");
+  fwrite(c, strlen(c) + 1, 1, fp);
+  fseek(fp, SEEK_SET, 0);
+  fread(buffer, strlen(c)+1, 1, fp);
+  printf("%s\n", buffer);
+  fclose(fp);
+  return(0);
+}
+
+```
+</p>
+</details>
+
+- fclose(): Đóng file đã mở
+- feof(): Kiểm tra kí tự hiện tại có phải kí tự cuối cùng của file hay chưa.
+
