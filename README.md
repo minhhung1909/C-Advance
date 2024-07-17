@@ -722,7 +722,7 @@ Stack gồm 3 cơ chế:
 - front: Lấy giá trị của phần tử đầu tiên.
 
 
-# 12.BINARY SEARCH - FILE OPERATIONS - CODE STANDARDS
+# 12. BINARY SEARCH - FILE OPERATIONS - CODE STANDARDS
 
 ## Binary Search
 
