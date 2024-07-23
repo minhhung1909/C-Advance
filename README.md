@@ -965,31 +965,202 @@ Ví dụ về Class
 
 #include <iostream>
 #include <string>
-
 using namespace std;
-
 class SinhVien{
     public:
-        int ID;
-        string NAME;
-        string CLASS;
+        int ID;         // Protective
+        string NAME;    // Protective
+        string CLASS;   // Protective
         void Display(){
             cout << "MSSV: " << ID << endl;
             cout << "Name: " << NAME << endl;
             cout << "Class: " << CLASS << endl;
         }
 };
-
 int main(int argc, char const* argv[])
 {
-    SinhVien sv1;
+    SinhVien sv1;       //Object
     sv1.ID = 15;
     sv1.NAME = "Hung";
     sv1.CLASS = "IOT17";
     sv1.Display();
     return(0);
 }
+```
+Đối với các biến mang kiểu dữ liệu của Class (Ví dụ class trên là SinhVien) thì được gọi là Object. Object chỉ có phạm vi truy cập là Public.
 
+### Public: 
+- Protective: thường là cái Variable (Nhưng không được gọi là variable mà phải gọi là protective).
+- Method: Tương tự với Protective thì đây là những hàm nhưng không được gọi là hàm mà phải gọi là method.
+
+### Private: 
+Private là phạm vi truy cập mà chỉ có nhưng protective, method, constructor... trong Class là được phép truy cập. Object thì không được quyền truy cập tới phạm vi này.
+
+Tương tự Static trong C thì chính là vùng private này.
+
+### Protected: 
+
+### Constructor:
+
+Constructor là hàm tự động được gọi ra đầu tiên khi object được khởi tạo. Constructor phải có tên trùng với tên của Class.
+
+### Destractor:
+
+Destractor là trái ngược của constractor và tuân thủ theo cấu trúc FILO(First In Last Out) tức là những giá trị mà sau khi Constructor khai báo ra thì được Destractor thu hồi lại.
+
+Ví dụ Constructor :
+
+```C++
+#include <iostream>
+#include <string>
+using namespace std;
+class SinhVien{
+    public:
+        SinhVien(string name, string classroom);    // Init Constructor
+        int ID;         // Protective
+        string NAME;    // Protective
+        string CLASS;   // Protective
+        void Display(); // init Method
+};
+
+SinhVien::SinhVien(string name, string classroom){  // setup Constructor
+    static int id = 15;
+    SinhVien::ID = id;
+    id++;
+
+    SinhVien::NAME =  name;
+    SinhVien::CLASS = classroom;
+}
+
+void SinhVien::Display(){
+    cout << "MSSV: " << ID << endl;
+    cout << "Name: " << NAME << endl;
+    cout << "Class: " << CLASS << endl;
+}
+
+
+int main(int argc, char const* argv[])
+{
+    SinhVien sv1("Hung", "AIOT"), sv2("Hoa", "KT");
+    sv1.Display();
+    sv2.Display();
+    return(0);
+}
+```
+## Các lưu ý trong Class:
+
+### Quy tắc Code:
+
+- Tách các phần định nghĩa ra file mới (*.hpp).
+
+```C++
+// File .hpp
+#include <iostream>
+#include <string>
+
+class SinhVien{
+    public:
+        int ID;
+        string NAME;
+        string CLASS; 
+        void Display()
+};
 ```
 
-- Public: mmới
+```C++
+// File main.cpp
+#include <iostream>
+#include <string>
+#include <main.hpp>
+
+using namespace std;
+
+void SinhVien::Display(){
+    cout << "MSSV: " << ID << endl;
+    cout << "Name: " << NAME << endl;
+    cout << "Class: " << CLASS << endl;
+}
+
+int main(int argc, char const* argv[]){
+    SinhVien sv1;       //Object
+    sv1.ID = 15;
+    sv1.NAME = "Hung";
+    sv1.CLASS = "IOT17";
+    sv1.Display();
+    return(0);
+}
+```
+### Giá trị mặc định trong Class:
+
+insuaranceState luôn là 1 (YES) nếu không điền vào thông tin gì và nếu điền vào thì sẽ được thay đổi.
+
+```C++
+#include <iostream>
+#include <string>
+using namespace std;
+
+typedef enum{
+    NO, YES
+}insurance;
+
+
+class SinhVien{
+    public:
+        SinhVien(string name, string classroom);    // init Constructor
+        void Display(insurance insuaranceState); // init Method
+    private:
+        int ID;         // Protective
+        string NAME;    // Protective
+        string CLASS;   // Protective
+};
+
+
+SinhVien::SinhVien(string name, string classroom){
+    static int id = 15;
+    SinhVien::ID = id;
+    id++;
+
+    SinhVien::NAME =  name;
+    SinhVien::CLASS = classroom;
+
+
+}
+
+void SinhVien::Display(insurance insuaranceState = YES){
+    cout << "MSSV: " << ID << endl;
+    cout << "Name: " << NAME << endl;
+    cout << "Class: " << CLASS << endl;
+    cout << "State Insurance: " << insuaranceState <<endl;
+}
+
+int main(int argc, char const* argv[])
+{
+    SinhVien sv1("Hung", "AIOT"), sv2("Hoa", "KT");
+    sv1.Display(NO);
+    sv2.Display();
+    return(0);
+}
+```
+
+### Stactic trong Class:
+
+Khi dùng Static trong class thì nhớ gọi ra ngoài để khởi tạo nó tránh trường hợp mỗi lần gọi object thì máy lại cấp phát 1 vùng nhớ khác cho biến static này. Ví dụ ở dưới.
+
+```C++
+#include <iostream>
+#include <string>
+using namespace std;
+class SinhVien{
+    public:
+        SinhVien(string name, string classroom);
+        void Display(insurance insuaranceState); 
+        static int VAR; // Nếu chỉ để như này thì mỗi lần gọi 1 Object thì máy sẽ cấp phát cho biến này 1 vùng địa chỉ mới vậy thì static vô nghĩa. Phải gọi ra ngoài như bên dưới.
+    private:
+        int ID; 
+        string NAME;
+        string CLASS;
+};
+
+int SinhVien::VAR = 0;  // Lúc gọi ra như này thì máy sẽ cấp 1 địa chỉ cho dù có gọi bao nhiêu object
+```
+
