@@ -1,4 +1,4 @@
-# C-C-Advanced-Study
+# C-C++-Advanced-Study
 - [1a. COMPILER](#1a-COMPILER)
 - [1b. MACRO](#1b-MACRO)
 - [2a. STDARG](#2a-STDARG)
@@ -14,6 +14,7 @@
 - [10. LINKED LIST](#10-LINKED-LIST)
 - [11. STACK - QUEUE](#11-STACK---QUEUE)
 - [12. BINARY SEARCH - FILE OPERATIONS - CODE STANDARDS](#12-BINARY-SEARCH---FILE-OPERATIONS---CODE-STANDARDS)
+- [13. CLASS](#13-CLASS)
   
 # 1a. COMPILER
 
@@ -826,7 +827,7 @@ int main()
 - fgetc(): Láy giá trị hiện tại của file. Return kiểu char
 
 
-<details><summary>Code Demo Goto</summary>
+<details><summary> Code Demo fgetc </summary>
 <p>
     
 ```C
@@ -954,4 +955,46 @@ int main()
 
 - fclose(): Đóng file đã mở
 - feof(): Kiểm tra kí tự hiện tại có phải kí tự cuối cùng của file hay chưa.
+
+# 13. CLASS
+
+Class là một kiểu dữ liệu tương tự như struct hay union. Sự khác nhau của Class và những kiểu dữ liệu còn lại là có phạm vi truy cập như: Public, private, protected.
+
+Ví dụ về Class
+```C++
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class SinhVien{
+    public:
+        int ID;
+        string NAME;
+        string CLASS;
+        void Display(){
+            cout << "MSSV: " << ID << endl;
+            cout << "Name: " << NAME << endl;
+            cout << "Class: " << CLASS << endl;
+        }
+};
+
+int main(int argc, char const* argv[])
+{
+    SinhVien sv1;
+    sv1.ID = 15;
+    sv1.NAME = "Hung";
+    sv1.CLASS = "IOT17";
+    sv1.Display();
+    return(0);
+}
+
+```
+
+- Public: 
+
+-
+
+-
 
