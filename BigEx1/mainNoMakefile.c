@@ -1,9 +1,8 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define FILENAME "D:/Study/Hala/Big Ex1/data.csv"
+#define FILENAME "data.csv"
 
 typedef struct Member
 {
@@ -99,26 +98,7 @@ void addMember(Member data[])
 	fclose(file);
 }
 
-int searchByUID(const Member data[], const char *uid)
-{
-	printf("Enter UID want find: ");
-	fflush(stdin);
-	gets(uid);
-	int numOfResident = getSizeDB(); // because 1 line is title so num of resident = num of line - 1
-
-	for (int i = 1; i < numOfResident; i++)
-	{
-		if (strcmp(data[i].uid, uid) == 0)
-			return i;
-	}
-	return -1;
-}
-
-int searchByLicensePlate(const Member data[], const char* licensePlate){
-	printf("Enter License Plate want find: ");
-	fflush(stdin);
-	gets(licensePlate);
-
+int searchByLicensePlate(const Member data[], char* licensePlate){
 	int numOfResident = getSizeDB(); // because 1 line is title so num of resident = num of line - 1
 
 	for (int i = 1; i < numOfResident; i++)
@@ -129,26 +109,36 @@ int searchByLicensePlate(const Member data[], const char* licensePlate){
 	return -1;
 }
 
-void displayResident(const Member data[], int position){
-	printf("////////////////////////////////////////////////////////////////////////////\n");
-	printf("Found resident: \n");
-	printf("%s\t\t%s\t\t%s\t\t%s\n", data[0].uid, data[0].roomNumber, data[0].name, data[0].licensePlate);
-	printf("%s\t\t%s\t\t%s\t\t%s\n", data[position].uid, data[position].roomNumber, data[position].name, data[position].licensePlate);
-	printf("////////////////////////////////////////////////////////////////////////////\n");
+int searchByUID(const Member data[], const char* uid)
+{
+	int numOfResident = getSizeDB(); // because 1 line is title so num of resident = num of line - 1
+
+	for (int i = 1; i < numOfResident; i++)
+	{
+		if (strcmp(data[i].uid, uid) == 0)
+			return i;
+	}
+	return -1;
 }
 
-// void updateResident(Member data[], void (*methodFind)(Member, const char*)){
-// 	int position;
-// 	printf("Information before edit: ");
-// 	displayResident(data, position);
-// }
+Member searchMember(const Member data[], const char* searchValue, int (*SearchFunction) (const Member*, const char*)){
+	int position;
+
+	if ((position = SearchFunction(data, searchValue)) > 0){
+		printf("Found Resident: \n");
+		printf("%s\t\t%s\t\t%s\t\t%s\n", data[0].uid, data[0].roomNumber, data[0].name, data[0].licensePlate);
+		printf("%s\t\t%s\t\t%s\t\t%s\n", data[position].uid, data[position].roomNumber, data[position].name, data[position].licensePlate);
+		exit(0);
+	}
+	printf("Resident not found! \n");
+}
 
 void findInfomation(const Member data[])
 {
 	int pickOption2;
 	char uidFind[20];
 	char licensePlateFind[20];
-	int pos;
+
 continueFind:
 	menu2();
 	printf("Pick your option: ");
@@ -156,41 +146,26 @@ continueFind:
 	switch (pickOption2)
 	{
 	case 1:
-
-		if ((pos = searchByUID(data, uidFind)) < 0)
-		{
-			printf("Resident not found! \n");
-			goto continueFind;
-		}
-
-		displayResident(data, pos);
-
-		printf("Enter 1 for continue find!\nEnter any key for return main Menu \n");
-		printf("Enter your choice: ");
-		scanf("%d", &pickOption2);
-		if(pickOption2 == 1)	goto continueFind;
-		else 	break;
+		printf("Enter UID want find: ");
+		fflush(stdin);
+		gets(uidFind);
+		searchMember(data, uidFind, searchByUID);
 
 	case 2:
-		if ((pos = searchByLicensePlate(data, licensePlateFind)) < 0)
-		{
-			printf("Resident not found! \n");
-			goto continueFind;
-		}
-
-		displayResident(data, pos);
-
-		printf("Enter 1 for continue find!\nEnter any key for return main Menu \n");
-		printf("Enter your choice: ");
-		scanf("%d", &pickOption2);
-		if(pickOption2 == 1)	goto continueFind;
-		else 	break;
+		printf("Enter Licens Plantes want find: ");
+		fflush(stdin);
+		gets(licensePlateFind);
+		searchMember(data, licensePlateFind, searchByLicensePlate);
 
 	default:
 		printf("Your option not vaild!!!");
 		break;
 	}
 }
+
+// void updateResident(Member data[], void (*methodFind)(Member, const char*)){
+
+// }
 
 int main()
 {
@@ -224,6 +199,6 @@ start:
 		printf("Your option not vaild!!!");
 		break;
 	}
-	getch();
+	// getch();
 	return 0;
 }
