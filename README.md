@@ -15,7 +15,9 @@
 - [11. STACK - QUEUE](#11-STACK---QUEUE)
 - [12. BINARY SEARCH - FILE OPERATIONS - CODE STANDARDS](#12-BINARY-SEARCH---FILE-OPERATIONS---CODE-STANDARDS)
 - [13. CLASS](#13-CLASS)
-  
+- [14. OBJECT-ORIENTED PROGRAMMING](#14-OBJECT-ORIENTED-PROGRAMMING)
+- [15. VECTOR - LIST](#15-VECTOR---LIST)
+
 # 1a. COMPILER
 
 Compiler Là phần mềm để dịch ngôn ngữ bậc cao về ngôn ngữ máy.
@@ -1164,3 +1166,238 @@ class SinhVien{
 int SinhVien::VAR = 0;  // Lúc gọi ra như này thì máy sẽ cấp 1 địa chỉ cho dù có gọi bao nhiêu object
 ```
 
+# 14. OBJECT-ORIENTED PROGRAMMING
+
+- Hướng đối tượng có 4 tính chất: Tính đóng gói (Encapsulation), tính trừu tượng (Abstraction), tính kế thừa (Inheritance), tính đa hình (Polymorphism).
+
+## Tính Kế Thừa (Inheritance)
+
+- Inheritance trong lập trình hướng đối tượng OOP là một cơ chế xây dựng class mới dựa trên các class đã có. Các class kế thừa sẽ bao gồm toàn bộ các attributes và methods từ base class (lớp cơ sở) hay parent class (lớp cha).
+
+- Các lớp Con kế thừa toàn bộ thành phần của lớp Cha và không cần phải đinh nghĩa lại. Lớp có có thể mở rộng các thành phần kế thừa hoặc bổ sung những thanh phần mới. Tránh được sự trùng lặp không cần thiết.
+
+__Lưu ý 1: Muốn class sau kế thừa được các protective thì không được để trong private mà phải để trong protected.__
+
+__Lưu ý 2: Khi tạo 1 con trỏ của class parent trỏ tới địa chỉ của class child thì nó sẽ trỏ tới class Parent.__
+
+
+```C++
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+class DoiTuong{
+    protected:
+        int ID;
+        string TEN;
+    public:
+        DoiTuong();                 // Constructor
+        void input(string ten);
+        void Display();
+};
+
+DoiTuong::DoiTuong(){
+    static int id = 100;
+    ID = id;
+    id++;
+}
+
+void DoiTuong:: input(string name){
+    TEN = name;
+}
+
+void DoiTuong::Display(){
+    cout << "ID: " << ID << endl;
+    cout << "Name: " << TEN << endl;
+}
+
+class SinhVien : public DoiTuong{
+    private:
+        string LOP;
+        string HOCKY;
+    public:
+        void input(string ten, string lop, string hocky);   // Override
+        void Display();
+};
+
+void SinhVien::input(string ten, string lop, string hocky){
+    TEN = ten;
+    LOP = lop;
+    HOCKY = hocky;
+}
+
+void SinhVien::Display(){
+    cout << "ID: " << ID << endl;
+    cout << "Name: " << TEN << endl;
+    cout << "Class: " << LOP << endl;
+    cout << "Semester: " << HOCKY << endl;
+}
+
+int main(int argc, char const *argv[]){
+    DoiTuong td;
+    td.input("Hung");
+    td.Display();
+    cout << "---------------------------" << endl;
+    SinhVien sv;
+    sv.input("Minh", "IOT17", "HKI");
+    sv.Display();
+    return 0;
+}
+```
+### Kế thừa Public
+
+Nếu class parent là Public thì con là Public. Nếu class parent là protected thì child là protected.
+
+### Kế thừa Protected
+
+Nếu class parent là Public thì con là protected. Nếu class parent là protected thì child là Public.
+
+### Kế thừa Private
+
+Nếu class parent là Public hay protected thì qua child class đều là private.
+
+### Vitrual Function
+Khi muốn ưu tiên sử dụng các protective ở class child thì dùng vitrual function.
+
+```c++
+
+#include<iostream>
+#include<string>
+using namespace std;
+
+class Parent{
+    public:
+        virtual char* word(){       // vitrual function: giúp ưu tiên sử dụng hàm word của các child class .
+            return (char*) "Parent Class\n";
+        }
+        void display(){
+            cout << "Display: " << word() << endl;
+        }
+};
+
+class Child : public Parent{
+    public:
+        char* word(){                        //Override
+            return (char*) "Child Class\n";
+        }
+};
+
+int main(int argc, char const *argv[]){
+    Parent p;
+    p.display();
+
+    Child c;
+    c.display();
+    return 0;
+}
+
+```
+
+
+## Tính Đóng gói (Encapsulation)
+
+Khi khởi tạo 1 class không được cách truy cập các Protective một cách trực tiếp mà phải thông qua các method.
+
+## Tính trừu tượng (Abstraction)
+
+Những quá trình thược hiện tính toán cần được ẩn đi chỉ được return result cuối cùng.
+
+```c++
+#include<iostream>
+#include<string>
+#include<cmath>
+using namespace std;
+
+class GiaiPhuongTrinh
+{
+    private:
+        double a, b, c, x1, x2, delta;
+        void tinhNghiem();
+    public:
+        void enterNumber(double num_a, double num_b, double num_c);
+        void printResult();
+};
+void GiaiPhuongTrinh::tinhNghiem()
+{
+    delta = b*b - 4*a*c;
+    if (delta < 0){
+        delta = -1;
+    }  
+    else if (delta == 0){
+        x1 = x2 = -b/ (2*a);
+    }
+    else if (delta > 0){
+        x1 = (-b + sqrt(delta))/(2*a);
+        x2 = (-b - sqrt(delta))/(2*a);
+    }
+}
+void GiaiPhuongTrinh::enterNumber(double num_a, double num_b, double num_c){
+    a = num_a;
+    b = num_b;
+    c = num_c;
+}
+void GiaiPhuongTrinh::printResult()
+{
+    tinhNghiem();
+    if (delta == -1){
+        cout << "PT vo nghiem" << endl;
+    }
+    else if (delta == 0){
+        cout << "PT co nghiem chung: " << x1 << endl;
+    }
+    else if (delta > 0){
+        cout << "PT co 2 nghiem: \n";
+        cout << "x1: " << x1 << endl;
+        cout << "x2: " << x2 << endl;
+    }    
+}
+int main(int argc, char const *argv[]){
+    GiaiPhuongTrinh pt1;
+    pt1.enterNumber(1,5,4);
+    pt1.printResult();
+    return 0;
+}
+```
+## Tính đa hình (Polymorphism)
+Polymorphism được định nghĩa là một Method có nhiều parameter khác nhau.
+
+```c++
+#include<iostream>
+#include<string>
+using namespace std;
+
+class caculate{
+    private:
+        int a,b;
+    public:
+        void sum(int a, int b);         //cùng một method có nhiều parameter.
+        void sum(int a, int b, int c);
+        double sum(int a, double b);
+};
+
+void caculate::sum(int a, int b){
+    cout << "Sum 2 number: " << a + b << endl;
+}
+void caculate::sum(int a, int b, int c){
+    cout << "Sum 3 number: " << a + b + c << endl;
+}
+double caculate::sum(int a, double b){
+    return a + b;
+}
+
+int main(int argc, char const *argv[]){
+    caculate s;
+    s.sum(10,10);
+    s.sum(10,10,10);
+    cout << "sum with double: "<< s.sum(10, 1.1);
+    return 0;
+}
+```
+
+# 15. VECTOR - LIST
+
+## Vector
+
+
+## List
