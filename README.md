@@ -1399,9 +1399,124 @@ int main(int argc, char const *argv[]){
 
 ## Vector
 
+```c++
+#include<iostream>
+#include<string>
+#include<vector>
+using namespace std;
 
+int main(int argc, char const* argv[]){
+    vector<int> arrVt;
+    arrVt.push_back(11);
+    arrVt.push_back(22);
+    arrVt.push_back(33);
+    arrVt.push_back(44);
+
+    for (int i =0; i< arrVt.size(); i++){
+        cout <<"with posision is: "<< i << " value in array vector is: "<< arrVt[i] << endl;
+    }  
+    cout << "---------------------------" << endl;
+
+    // Insert any position
+    arrVt.insert(arrVt.end() - 3, 120);
+    for (int i =0; i< arrVt.size(); i++){
+        cout <<"with posision is: "<< i << "value in array vector is: "<< arrVt[i] << endl;
+    }  
+    cout << "---------------------------" << endl;
+
+    // Delete any postion
+    arrVt.erase(arrVt.begin() + 2);
+        for (int i =0; i< arrVt.size(); i++){
+        cout <<"with posision is: "<< i << "value in array vector is: "<< arrVt[i] << endl;
+    } 
+    return 0;
+}
+```
 
 ## List
 
 
+```c++
+#include<iostream>
+#include<string>
+#include<list>
+using namespace std;
 
+int main(int argc, char const* argv[]){
+    list<int> arrList;
+
+    arrList.push_back(10);
+    arrList.push_back(20);
+    arrList.push_back(30);
+    arrList.push_back(40);
+    arrList.push_back(50);
+    arrList.push_back(60);
+    arrList.push_back(70);
+    arrList.push_back(70);
+
+    // Acess List
+    for(int i : arrList){
+        cout << "Method 1: Value in list is: " << i << endl;
+    }
+    
+    for(auto i : arrList){
+        cout << "Method 2: Value in list is: " << i << endl;
+    }
+    cout << "--------------------------------------" << endl;
+    // Delete any postion 
+    list<int>::iterator postion = arrList.begin();  //  Initial poiter posion acess arrlist
+
+    postion++;// Increment pointer position by 1 to access the 2nd element
+
+    arrList.erase(postion); //Addition: we can delete data area with 2 pointer start-end ex: list.erase(iterator first, iterator last); 
+
+    for(auto i : arrList){
+        cout << "Value in list is: " << i << endl;
+    }
+    cout << "--------------------------------------" << endl;
+
+    // Delete with value
+    arrList.remove(70);
+    for(auto i : arrList){
+        cout << "Value in list is: " << i << endl;
+    }
+    cout << "--------------------------------------" << endl;
+    
+    // Insert value with any position
+    list<int>::iterator postionAdd = arrList.begin();  //  Initial poiter posion acess arrlist
+
+    postionAdd++;// Increment pointer position by 1 to access the 2nd element
+
+    arrList.insert(postionAdd, 20);
+    postionAdd++;
+    postionAdd++;
+    postionAdd++;
+    postionAdd++;
+    arrList.insert(postionAdd, 70);
+    arrList.insert(postionAdd, 80);
+
+    for(auto i : arrList){
+        cout << "Value in list is: " << i << endl;
+    }
+    cout << "--------------------------------------" << endl;
+    return 0;
+}
+```
+
+## Vitrual Function & Pure Vitrual Function
+
+Vitrual Function là Method được khai báo khi dùng lại cần định nghĩa lại (override)
+
+Pure Vitrual Function là method thuần ảo không có phần thân và được gắn cho 0.
+```c++
+class Car{
+public:
+    const char* Display() { // a normal non-virtual function
+        return "Hello world!"; 
+    } 
+    virtual const char* Display_Any() { // a normal virtual function
+        return "This is a __Normal virtual function.__"; 
+    }
+    virtual int Display_With() = 0; // a pure virtual function
+};
+```
