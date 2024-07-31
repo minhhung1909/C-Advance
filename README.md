@@ -907,7 +907,7 @@ int main ()
 <details><summary>Code Demo fputc() </summary>
 <p>
     
-```C
+```c
 
 #include <stdio.h>
 int main ()
@@ -933,7 +933,7 @@ int main ()
 <details><summary>Code Demo fwrite() </summary>
 <p>
     
-```C
+```c
 
 #include <stdio.h>
 #include <string.h>
@@ -963,7 +963,7 @@ int main()
 Class là một kiểu dữ liệu tương tự như struct hay union. Sự khác nhau của Class và những kiểu dữ liệu còn lại là có phạm vi truy cập như: Public, private, protected.
 
 Ví dụ về Class
-```C++
+```c++
 
 #include <iostream>
 #include <string>
@@ -1012,7 +1012,7 @@ Destractor là trái ngược của constractor và tuân thủ theo cấu trúc
 
 Ví dụ Constructor :
 
-```C++
+```c++
 #include <iostream>
 #include <string>
 using namespace std;
@@ -1055,7 +1055,7 @@ int main(int argc, char const* argv[])
 
 - Tách các phần định nghĩa ra file mới (*.hpp).
 
-```C++
+```c++
 // File .hpp
 #include <iostream>
 #include <string>
@@ -1069,7 +1069,7 @@ class SinhVien{
 };
 ```
 
-```C++
+```c++
 // File main.cpp
 #include <iostream>
 #include <string>
@@ -1096,7 +1096,7 @@ int main(int argc, char const* argv[]){
 
 insuaranceState luôn là 1 (YES) nếu không điền vào thông tin gì và nếu điền vào thì sẽ được thay đổi.
 
-```C++
+```c++
 #include <iostream>
 #include <string>
 using namespace std;
@@ -1148,7 +1148,7 @@ int main(int argc, char const* argv[])
 
 Khi dùng Static trong class thì nhớ gọi ra ngoài để khởi tạo nó tránh trường hợp mỗi lần gọi object thì máy lại cấp phát 1 vùng nhớ khác cho biến static này. Ví dụ ở dưới.
 
-```C++
+```c++
 #include <iostream>
 #include <string>
 using namespace std;
@@ -1181,7 +1181,7 @@ __Lưu ý 1: Muốn class sau kế thừa được các protective thì không �
 __Lưu ý 2: Khi tạo 1 con trỏ của class parent trỏ tới địa chỉ của class child thì nó sẽ trỏ tới class Parent.__
 
 
-```C++
+```c++
 #include<iostream>
 #include<string>
 
@@ -1400,4 +1400,8 @@ int main(int argc, char const *argv[]){
 ## Vector
 
 
+
 ## List
+
+
+
