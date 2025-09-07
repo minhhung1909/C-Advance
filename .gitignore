@@ -1,0 +1,26 @@
+.vscode/
+BigEx1/
+debug/
+ex2/
+Helloworld/
+image/
+
+L3_POINTER/*.exe
+!L5_Goto - setjmp/ex1
+!L5_Goto - setjmp/ex2
+L4_ Memory layout/
+L5_Extern - Static - Volatile/
+L6_Bit mask/
+L7_Bit mask/
+L8_Struct Union/
+L9_JSON/
+L10_Linked List/
+L11_Stack Queue/
+L12_BinarySearch_File_CodeStander/
+L13_Class/
+L14_OOP/
+L15_Vector-List/
+L16_STL/
+L17_Smart Pointer - Lambda/
+
+*.docx
