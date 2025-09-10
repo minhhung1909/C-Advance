@@ -4,7 +4,7 @@
 - [3. POINTER](L03_POINTER/README.md)
 - [4. STORAGE CLASSES](L04_STORAGE_CLASSES/README.md)
 - [5. Control Flow và Xử lý Lỗi](L05_Goto-setjmp/README.md)
-
+- [7. Struct_Union](L05_Goto-setjmp/README.md)
 
 
 
@@ -114,32 +114,6 @@ result // 0b0010
 result = 0b0101 << 1
 result // 0b1010
 ```
-
-# 8. STRUCT - UNION
-
-## Struct
-
-Struct là một cấu trúc dữ liệu có thể tự định nghĩa thành một kiểu dữ liệu mới có thể gom các biến có kiểu dữ liệu khác nhau thành một struct. Struct cho phép tạo cấu trúc dữ liệu lớn hơn và có tổ chức hơn.
-
-```C
-typedef struct Student {
-    int studentID;
-    char name[50];
-    double GPA;
-}Student;
-```
-
-## Union
-Union là một cấu trúc dữ liệu nhưng dữ liệu trong 1 union sẽ nhỏ hơn Struct bởi vì một thời điểm chỉ có một biến trong union sử dụng dữ liệu đó.
-
-```C
-typedef union Student {
-    int studentID;
-    char name[50];
-    double GPA;
-}Student;
-```
-
 
 # 9. JSON
 JSON là viết tắt của "Java Scrip Object Notation - Ghi chú về đối tượng Javascrip". JSON là một định dạng dùng để truyền dữ liệu. Json có cú pháp dựa trên 1 cặp key-value
