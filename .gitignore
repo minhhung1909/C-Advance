@@ -8,7 +8,6 @@ L3_POINTER/*.exe
 !L5_Goto - setjmp/ex1
 !L5_Goto - setjmp/ex2
 L05_Extern - Static - Volatile/
-L06_Bit Manipulation
 
 L08_Struct Union/
 L09_JSON/
