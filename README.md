@@ -4,8 +4,9 @@
 - [3. POINTER](L03_POINTER/README.md)
 - [4. STORAGE CLASSES](L04_STORAGE_CLASSES/README.md)
 - [5. Control Flow và Xử lý Lỗi](L05_Goto-setjmp/README.md)
-- [7. Struct_Union](L05_Goto-setjmp/README.md)
-
+- [6. Bit Mainpulation](L06_Bit Manipulation/README.md)
+- [7. Struct Union](L05_Goto-setjmp/README.md)
+- [8. Memory Layout](L08_ Memory-layout/README.md)
 
 
 
